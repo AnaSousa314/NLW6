@@ -1,28 +1,24 @@
-import express from 'express'
-
-// @types/express - adicionamos isso para que haja o autocomplete
+import express from 'express';
+import 'reflect-metadata';
+import './database';
+import {router} from './routes';
 
 const app = express();
 
+app.use(express.json());
+
+app.use(router);
+
 /*
- *GET => Buscar Informação
- *POST => Inserir(Criar) uma informação
- *PUT => Alterar uma informação 
- *DELETE => Remover um dado
- *PATCH => Alterar uma informação específica (ex.: somente senha)
+  Tipos de parametros
+  1 Routes Params - fazem parte da rota. são obrigatórios. ex http://localhost:3000/produtos
+  
+  2 Query Params - fazem parte de uma query, usado em filtros por exemplo. não são obrigatorios. ex: http:localhost:3000/produtos?name=teclado
+
+  3 Body Params - vem no corpo da requisição, só podendo ser usados em POST, PUT e PATCH.ex.:
+  {"name":"teclado","description":"teclado bom"}
 */
 
-app.get('/test',(req,res)=>{
-  // Request => Entrando
-  // Response => Saindo
-
-  // coloque return antes para evitar possíveis loops
-  return res.send("Olá NLW")
- });
-
- app.post('/test-post',(req,res)=>{
-   return res.send("Post")
- })
 
 app.listen(3000, ()=>{
   console.log('Server is running NLW')
