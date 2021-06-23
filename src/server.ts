@@ -1,7 +1,12 @@
-import express from 'express';
 import 'reflect-metadata';
-import './database';
+
+import express, { NextFunction,Request,Response } from 'express';
+import "express-async-errors"; //para tratar erros sem usar try catch
+
 import {router} from './routes';
+
+import './database';
+
 
 const app = express();
 
@@ -19,6 +24,19 @@ app.use(router);
   {"name":"teclado","description":"teclado bom"}
 */
 
+//Coloca-se o middleware de tratativa de erros depois das rotas, sempre
+app.use((err: Error,req: Request,res: Response,next: NextFunction)=>{
+  if (err instanceof Error) {
+    return res.status(400).json({
+      error: err.message
+    })
+  } 
+
+  return res.status(500).json({
+    status: "error",
+    message: "Internal Server Error"
+  })
+})
 
 app.listen(3000, ()=>{
   console.log('Server is running NLW')
