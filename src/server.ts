@@ -3,12 +3,18 @@ import 'reflect-metadata';
 import express, { NextFunction,Request,Response } from 'express';
 import "express-async-errors"; //para tratar erros sem usar try catch
 
+import cors from "cors"
+
 import {router} from './routes';
 
 import './database';
 
 
 const app = express();
+app.use(cors());//habilita p todos os outros cors
+app.use(cors({
+  origin: ""
+}))//ou habilita p apenas uma aplicacao especifica possa acessar
 
 app.use(express.json());
 
